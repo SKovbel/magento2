@@ -32,6 +32,20 @@
                     <argument name="dataSource" xsi:type="object">Magento\Core\Model\Resource\Url\Rewrite\Collection</argument>
                     <argument name="default_sort" xsi:type="string">url_rewrite_id</argument>
                 </arguments>
+                <block class="Magento\Backend\Block\Widget\Grid\Massaction" name="adminhtml.urlrewrite.massaction" as="grid.massaction">
+                    <arguments>
+                        <argument name="massaction_id_field" xsi:type="string">id</argument>
+                        <argument name="form_field_name" xsi:type="string">ids</argument>
+                        <argument name="use_select_all" xsi:type="string">1</argument>
+                        <argument name="options" xsi:type="array">
+                            <item name="delete" xsi:type="array">
+                                <item name="label" xsi:type="string" translate="true">Delete</item>
+                                <item name="url" xsi:type="string">*/*/massDelete</item>
+                                <item name="confirm" xsi:type="string" translate="true">Are you sure you want to delete the selected rewrite(s)?</item>
+                            </item>
+                        </argument>
+                    </arguments>
+                </block>
                 <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" as="grid.columnSet" name="adminhtml.urlrewrite.grid.columnSet">
                     <arguments>
                         <argument name="rowUrl" xsi:type="array">

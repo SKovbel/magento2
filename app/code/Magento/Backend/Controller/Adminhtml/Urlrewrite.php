@@ -512,4 +512,31 @@ class Urlrewrite extends \Magento\Backend\App\Action
         }
         return $this->_urlRewrite;
     }
+    
+    /**
+     * Delete redirects mass action
+     *
+     * @return \Magento\Backend\App\Action
+     */
+    public function massDeleteAction()
+    {
+        $rewriteIds = $this->getRequest()->getParam('ids', array());
+
+        if (!is_array($rewriteIds) || !count($rewriteIds)) {
+            return $this->_redirect('*/*/index');
+        }
+
+        try {
+            foreach ($rewriteIds as $id) {
+                $rewrite = $this->_objectManager->create('Magento\Core\Model\Url\Rewrite')
+                    ->load($id);
+                $rewrite->delete();
+            }
+            $this->messageManager->addSuccess(__('Total of %1 record(s) were deleted', count($rewriteIds)));
+        } catch (\Exception $e) {
+            $this->messageManager->addError(__('An error occurred while deleting URL Rewrite(s).'));
+        }
+        return $this->_redirect('*/*/index');
+    }
+
 }
