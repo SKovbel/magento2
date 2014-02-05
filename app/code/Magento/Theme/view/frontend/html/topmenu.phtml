@@ -29,12 +29,95 @@
  * @see \Magento\Theme\Block\Html\Topmenu
  */
 ?>
-<?php $columnsLimit = $this->getColumnsLimit() ? : 0; ?>
-<?php $_menu = $this->getHtml('level-top','submenu', $columnsLimit) ?>
-<?php if ($_menu): ?>
+<?php $root = $this->getTreeMenu()?>
+<?php if ($root->hasChildren()):?>
 <nav class="navigation" role="navigation">
-    <ul>
-        <?php echo $_menu; ?>
-    </ul>
+<ul>
+<?php foreach ($root->getChildren() as $cat0):?>
+    <li class="level0 nav-<?php echo $cat0->getIndex()?><?php if($cat0->getIsFirst()):?> first<?php elseif($cat0->getIsLast()):?> last<?php endif?> level-top<?php if($cat0->hasChildren()):?> parent<?php endif?>">
+        <a href="<?php echo $cat0->getUrl()?>"><span><?php echo $cat0->getName()?></span></a>
+        <?php if ($cat0->hasChildren()):?>
+        <div class="submenu" style="display: block; height: 0px; overflow: hidden;">
+        <ul class="level0">
+        <?php foreach ($cat0->getChildren() as $cat1):?>
+            <li class="column level1 nav-<?php echo $cat1->getIndex()?><?php if($cat1->getIsFirst()):?> first<?php elseif($cat1->getIsLast()):?> last<?php endif?><?php if($cat1->hasChildren()):?> parent<?php endif?>">
+                <a href="<?php echo $cat1->getUrl()?>"><span><?php echo $cat1->getName()?></span></a>
+                <?php if ($cat1->hasChildren()):?>
+                <div class="submenu">
+                <ul class="level1">
+                <?php foreach ($cat1->getChildren() as $cat2):?>
+                    <li class="level2 nav-<?php echo $cat2->getIndex()?><?php if($cat2->getIsFirst()):?> first<?php elseif($cat2->getIsLast()):?> last<?php endif?><?php if($cat2->hasChildren()):?> parent<?php endif?>">
+                        <a href="<?php echo $cat2->getUrl()?>"><span><?php echo $cat2->getName()?></span></a>
+                        <?php if ($cat2->hasChildren()):?>
+                        <div class="submenu">
+                        <ul class="level2">
+                        <?php foreach ($cat2->getChildren() as $cat3):?>
+                            <li class="level3 nav-<?php echo $cat3->getIndex()?><?php if($cat3->getIsFirst()):?> first<?php elseif($cat3->getIsLast()):?> last<?php endif?><?php if($cat3->hasChildren()):?> parent<?php endif?>">
+                                <a href="<?php echo $cat3->getUrl()?>"><span><?php echo $cat3->getName()?></span></a>
+                                <?php if ($cat3->hasChildren()):?>
+                                <div class="submenu">
+                                <ul class="level3">
+                                <?php foreach ($cat3->getChildren() as $cat4):?>
+                                    <li class="level4 nav-<?php echo $cat4->getIndex()?><?php if($cat4->getIsFirst()):?> first<?php elseif($cat4->getIsLast()):?> last<?php endif?><?php if($cat4->hasChildren()):?> parent<?php endif?>">
+                                        <a href="<?php echo $cat4->getUrl()?>"><span><?php echo $cat4->getName()?></span></a>
+                                        <?php if ($cat4->hasChildren()):?>
+                                        <div class="submenu">
+                                        <ul class="level4">
+                                        <?php foreach ($cat4->getChildren() as $cat5):?>
+                                            <li class="level5 nav-<?php echo $cat5->getIndex()?><?php if($cat5->getIsFirst()):?> first<?php elseif($cat5->getIsLast()):?> last<?php endif?><?php if($cat5->hasChildren()):?> parent<?php endif?>">
+                                                <a href="<?php echo $cat5->getUrl()?>"><span><?php echo $cat5->getName()?></span></a>
+                                                <?php if ($cat5->hasChildren()):?>
+                                                <div class="submenu">
+                                                <ul class="level5">
+                                                <?php foreach ($cat5->getChildren() as $cat6):?>
+                                                    <li class="level6 nav-<?php echo $cat6->getIndex()?><?php if($cat6->getIsFirst()):?> first<?php elseif($cat6->getIsLast()):?> last<?php endif?><?php if($cat6->hasChildren()):?> parent<?php endif?>">
+                                                        <a href="<?php echo $cat6->getUrl()?>"><span><?php echo $cat6->getName()?></span></a>
+                                                        <?php if ($cat6->hasChildren()):?>
+                                                        <div class="submenu">
+                                                        <ul class="level6">
+                                                        <?php foreach ($cat6->getChildren() as $cat7):?>
+                                                            <li class="level7 nav-<?php echo $cat7->getIndex()?><?php if($cat7->getIsFirst()):?> first<?php elseif($cat7->getIsLast()):?> last<?php endif?><?php if($cat7->hasChildren()):?> parent<?php endif?>">
+                                                                <a href="<?php echo $cat7->getUrl()?>"><span><?php echo $cat7->getName()?></span></a>
+                                                                <?php if ($cat7->hasChildren()):?>
+                                                                <?php /* insert next level here */ ?>
+                                                                <?php endif?>
+                                                            </li>
+                                                        <?php endforeach?>
+                                                        </ul>
+                                                        </div>
+                                                        <?php endif?>
+                                                    </li>
+                                                <?php endforeach?>
+                                                </ul>
+                                                </div>
+                                                <?php endif?>
+                                            </li>
+                                        <?php endforeach?>
+                                        </ul>
+                                        </div>
+                                        <?php endif?>
+                                    </li>
+                                <?php endforeach?>
+                                </ul>
+                                </div>
+                                <?php endif?>
+                            </li>
+                        <?php endforeach?>
+                        </ul>
+                        </div>
+                        <?php endif?>
+                    </li>
+                <?php endforeach?>
+                </ul>
+                </div>
+                <?php endif?>
+            </li>
+        <?php endforeach?>
+        </ul>
+        </div>
+        <?php endif?>
+    </li>
+<?php endforeach?>
+</ul>
 </nav>
-<?php endif; ?>
+<?php endif?>
