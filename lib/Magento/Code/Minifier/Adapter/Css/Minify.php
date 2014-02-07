@@ -23,22 +23,23 @@
  */
 
 
-namespace Magento\Code\Minifier\Adapter\Js;
+namespace Magento\Code\Minifier\Adapter\Css;
 
-if (!class_exists('JSMin')) {
-    require_once(__DIR__ . '/../../../../../JSMin/jsmin.php');
+if (!class_exists('CSSmin')) {
+    require_once(__DIR__ . '/../../../../../Minify/CSSmin.php');
 }
 
 /**
  * Adapter for JSMin library
  */
-class Jsmin implements \Magento\Code\Minifier\AdapterInterface
+class Minify implements \Magento\Code\Minifier\AdapterInterface
 {
     /**
      * {@inheritdoc}
      */
     public function minify($content)
     {
-        return \JSMin::minify($content);
+        $css = new \CSSmin();
+        return $css->run($content);
     }
 }

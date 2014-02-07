@@ -75,10 +75,11 @@ class Direct implements \Magento\View\Asset\MergeStrategyInterface
         $isCss = ($contentType == \Magento\View\Publisher::CONTENT_TYPE_CSS) ? true : false;
 
         foreach ($publicFiles as $file) {
-            if (!$this->_directory->isExist($this->_directory->getRelativePath($file))) {
+            $fileRelative = $this->_directory->getRelativePath($file);
+            if (!$this->_directory->isExist($fileRelative)) {
                 throw new \Magento\Exception("Unable to locate file '{$file}' for merging.");
             }
-            $content = $this->_directory->readFile($this->_directory->getRelativePath($file));
+            $content = $this->_directory->readFile($fileRelative);
             if ($isCss) {
                 $content = $this->_cssUrlResolver->replaceCssRelativeUrls($content, $file, $targetFile);
             }

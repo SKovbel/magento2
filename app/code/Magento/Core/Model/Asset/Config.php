@@ -32,14 +32,9 @@ namespace Magento\Core\Model\Asset;
 class Config implements \Magento\View\Asset\ConfigInterface
 {
     /**
-     * XML path for CSS files merge configuration
+     * XML path for asset files merge configuration
      */
-    const XML_PATH_MERGE_CSS_FILES  = 'dev/css/merge_css_files';
-
-    /**
-     * XML path for JavaScript files merge configuration
-     */
-    const XML_PATH_MERGE_JS_FILES   = 'dev/js/merge_files';
+    const XML_PATH_MERGE_FILES  = 'dev/%s/merge_files';
 
     /**
      * XML path for asset minification configuration
@@ -65,23 +60,13 @@ class Config implements \Magento\View\Asset\ConfigInterface
     }
 
     /**
-     * Check whether merging of CSS files is on
+     * Check whether merging of asset files is on
      *
      * @return bool
      */
-    public function isMergeCssFiles()
+    public function isAssetMergeFiles($contentType)
     {
-        return (bool)$this->storeConfig->getConfigFlag(self::XML_PATH_MERGE_CSS_FILES);
-    }
-
-    /**
-     * Check whether merging of JavScript files is on
-     *
-     * @return bool
-     */
-    public function isMergeJsFiles()
-    {
-        return (bool)$this->storeConfig->getConfigFlag(self::XML_PATH_MERGE_JS_FILES);
+        return (bool)$this->storeConfig->getConfigFlag(sprintf(self::XML_PATH_MINIFICATION_ENABLED, $contentType));
     }
 
     /**

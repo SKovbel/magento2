@@ -22,33 +22,23 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-namespace Magento\View\Asset;
+
+namespace Magento\Code\Minifier\Adapter\Js;
+
+if (!class_exists('JSMin')) {
+    require_once(__DIR__ . '/../../../../../Minify/JSMin.php');
+}
 
 /**
- * View asset configuration interface
+ * Adapter for JSMin library
  */
-interface ConfigInterface
+class Minify implements \Magento\Code\Minifier\AdapterInterface
 {
     /**
-     * Check whether merging of asset files is on
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function isAssetMergeFiles($contentType);
-
-    /**
-     * Check whether asset minification is on for specified content type
-     *
-     * @param string $contentType
-     * @return bool
-     */
-    public function isAssetMinification($contentType);
-
-    /**
-     * Get asset minification adapter for specified content type
-     *
-     * @param string $contentType
-     * @return string
-     */
-    public function getAssetMinificationAdapter($contentType);
+    public function minify($content)
+    {
+        return \JSMin::minify($content);
+    }
 }

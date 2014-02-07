@@ -87,11 +87,12 @@ class Generate implements \Magento\Code\Minifier\StrategyInterface
      */
     protected function _isUpdateNeeded($originalFile, $minifiedFile)
     {
-        if (!$this->pubViewCacheDir->isExist($minifiedFile)) {
+        $minifiedFileRelative = $this->pubViewCacheDir->getRelativePath($minifiedFile);
+        if (!$this->pubViewCacheDir->isExist($minifiedFileRelative)) {
             return true;
         }
         $originalFileMtime = $this->rootDirectory->stat($originalFile)['mtime'];
-        $minifiedFileMtime = $this->pubViewCacheDir->stat($minifiedFile)['mtime'];
+        $minifiedFileMtime = $this->pubViewCacheDir->stat($minifiedFileRelative)['mtime'];
         return ($originalFileMtime != $minifiedFileMtime);
     }
 }

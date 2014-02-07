@@ -83,8 +83,8 @@ class MergeService
             throw new \InvalidArgumentException("Merge for content type '$contentType' is not supported.");
         }
 
-        $isCssMergeEnabled = $this->config->isMergeCssFiles();
-        $isJsMergeEnabled = $this->config->isMergeJsFiles();
+        $isCssMergeEnabled = $this->config->isAssetMergeFiles(\Magento\View\Publisher::CONTENT_TYPE_CSS);
+        $isJsMergeEnabled = $this->config->isAssetMergeFiles(\Magento\View\Publisher::CONTENT_TYPE_JS);
         if (($isCss && $isCssMergeEnabled) || ($isJs && $isJsMergeEnabled)) {
             if ($this->state->getMode() == \Magento\App\State::MODE_PRODUCTION) {
                 $mergeStrategyClass = 'Magento\View\Asset\MergeStrategy\FileExists';

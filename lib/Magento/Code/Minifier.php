@@ -59,7 +59,7 @@ class Minifier
         $directoryName
     ) {
         $this->_strategy = $strategy;
-        $this->rootDirectory = $filesystem->getDirectoryRead(\Magento\App\Filesystem::ROOT_DIR);
+        $this->rootDirectory = $filesystem->getDirectoryWrite(\Magento\App\Filesystem::ROOT_DIR);
         $this->pubViewCacheDir = $filesystem->getDirectoryRead(\Magento\App\Filesystem::PUB_VIEW_CACHE_DIR);
         $this->directoryName = $directoryName;
     }
@@ -72,18 +72,19 @@ class Minifier
      */
     public function getMinifiedFile($originalFile)
     {
-        if ($this->_isFileMinified($originalFile)) {
-            return $originalFile;
-        }
         $originalFileRelative = $this->rootDirectory->getRelativePath($originalFile);
-        $minifiedFile = $this->_findOriginalMinifiedFile($originalFileRelative);
-        if (!$minifiedFile) {
-            $minifiedFile = $this->directoryName . '/' . $this->_generateMinifiedFileName($originalFile);
+        $minifiedFile = $this->directoryName . '/' . $this->_generateMinifiedFileName($originalFile);
+        $minifiedFileRelative = $this->rootDirectory->getRelativePath($minifiedFile);
+
+        if ($this->_isFileMinified($originalFile)) {
+            $this->rootDirectory->copyFile($originalFileRelative, $minifiedFileRelative);
+        } elseif ($originalMinifiedFileRelative = $this->_findOriginalMinifiedFile($originalFileRelative)) {
+            $this->rootDirectory->copyFile($originalMinifiedFileRelative, $minifiedFileRelative);
+        } else {
             $this->_strategy->minifyFile($originalFileRelative, $minifiedFile);
         }
 
-        $minifiedFile = $this->pubViewCacheDir->getRelativePath($minifiedFile);
-        return $this->pubViewCacheDir->getAbsolutePath($minifiedFile);
+        return $minifiedFile;
     }
 
     /**
