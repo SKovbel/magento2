@@ -25,12 +25,12 @@
 
 namespace Magento\Code\Minifier\Adapter\Css;
 
-if (!class_exists('CSSmin')) {
-    require_once(__DIR__ . '/../../../../../Minify/CSSmin.php');
+if (!class_exists('CSSMin')) {
+    require_once(__DIR__ . '/../../../../../Minify/CSSMin.php');
 }
 
 /**
- * Adapter for JSMin library
+ * Adapter for CSSMin library
  */
 class Minify implements \Magento\Code\Minifier\AdapterInterface
 {
@@ -39,7 +39,7 @@ class Minify implements \Magento\Code\Minifier\AdapterInterface
      */
     public function minify($content)
     {
-        $css = new \CSSmin();
+        $css = new \CSSMin();
         return $css->run($content);
     }
 }
